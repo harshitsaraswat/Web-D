@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID Card Generation</title>
+    <style>
+        .id-card {
+            border: 1px solid #000;
+            width: 300px;
+            padding: 10px;
+            margin-top: 20px;
+            display: none; 
+        }
+        .id-card img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="Form">
+        <form id="idForm">
+            Name: <input type="text" id="name" size="20"><br><br>
+            Address: <input type="text" id="address" size="20"><br><br>
+            Course: <input type="text" id="course" size="20"><br><br>
+            Gender: 
+            <input type="radio" name="gender" value="Male">Male  
+            <input type="radio" name="gender" value="Female">Female<br><br>
+            Blood Group: 
+            <select id="bloodGroup">
+                <option>Select</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select><br><br>
+            Emergency Contact Number: <input type="text" id="emergencyContact"><br><br>
+            Photo: <input type="file" id="photo" accept="image/*"><br><br>
+            <button type="button" onclick="generateIDCard()">Generate ID Card</button>
+        </form>
+    </div>
+
+    <div class="id-card" id="idCard">
+        <h2>ID Card</h2>
+        <img id="idPhoto" src="" alt="Photo">
+        <p><strong>Name:</strong> <span id="idName"></span></p>
+        <p><strong>Address:</strong> <span id="idAddress"></span></p>
+        <p><strong>Course:</strong> <span id="idCourse"></span></p>
+        <p><strong>Gender:</strong> <span id="idGender"></span></p>
+        <p><strong>Blood Group:</strong> <span id="idBloodGroup"></span></p>
+        <p><strong>Emergency Contact:</strong> <span id="idEmergencyContact"></span></p>
+    </div>
+
+    <script>
+        function generateIDCard() {
+            const name = document.getElementById('name').value;
+            const address = document.getElementById('address').value;
+            const course = document.getElementById('course').value;
+            const gender = document.querySelector('input[name="gender"]:checked') ? document.querySelector('input[name="gender"]:checked').value : 'Not specified';
+            const bloodGroup = document.getElementById('bloodGroup').value;
+            const emergencyContact = document.getElementById('emergencyContact').value;
+            const photoInput = document.getElementById('photo');
+            document.getElementById('idName').innerText = name;
+            document.getElementById('idAddress').innerText = address;
+            document.getElementById('idCourse').innerText = course;
+            document.getElementById('idGender').innerText = gender;
+            document.getElementById('idBloodGroup').innerText = bloodGroup;
+            document.getElementById('idEmergencyContact').innerText = emergencyContact;
+            if (photoInput.files && photoInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('idPhoto').src = e.target.result;
+                }
+                reader.readAsDataURL(photoInput.files[0]);
+            }
+            document.getElementById('idCard').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
